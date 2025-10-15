@@ -115,8 +115,8 @@ export default function Portfolio() {
         "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop",
       screenshots: [
         "./images/projects/mapLiveVideo.png",
-        "/images/projects/incidents-routiers/screenshot1.png",
-        "/images/projects/incidents-routiers/screenshot1.png",
+        "./images/projects/incidents-routiers/screenshot1.png",
+        "./images/projects/incidents-routiers/screenshot1.png",
       ],
       features: [
         "Détection temps réel",
@@ -134,9 +134,9 @@ export default function Portfolio() {
       image:
         "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop",
       screenshots: [
-        "/images/projects/mi1.jpeg",
-        "/images/projects/mi2.jpeg",
-        "/images/projects/mi3.jpeg",
+        "./images/projects/mi1.jpeg",
+        "./images/projects/mi2.jpeg",
+        "./images/projects/mi3.jpeg",
       ],
       features: [
         "Assistance diagnostic",
