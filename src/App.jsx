@@ -1,781 +1,1336 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
 import {
-  Menu,
   X,
+  Github,
+  Linkedin,
   Mail,
   Phone,
   MapPin,
-  Github,
-  Linkedin,
-  ChevronUp,
   ExternalLink,
   ChevronRight,
 } from "lucide-react";
 
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState("home");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [language, setLanguage] = useState("en");
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
-
-      const sections = ["home", "about", "resume", "projects", "contact"];
-      const current = sections.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMenuOpen(false);
-    }
+  const translations = {
+    en: {
+      nav: {
+        home: "Home",
+        about: "About",
+        projects: "Projects",
+        contact: "Contact",
+      },
+      hero: {
+        greeting: "HELLO!",
+        title1: "I'm",
+        title2: "Khadija",
+        title3: "Hantati",
+        profession: "Full Stack Developer",
+        subtitle:
+          "Full Stack Web Developer & AI Engineer. Expert in building modern web applications with React, Django, and Laravel, while integrating AI solutions including Computer Vision, Deep Learning, and IoT systems.",
+        btnWork: "View My Work",
+        btnCV: "Download CV",
+      },
+      about: {
+        label: "About Me",
+        title: "Know Me More",
+        subtitle: "Hi, I'm",
+        description1:
+          "I'm a Full Stack Web Developer and AI Engineer with strong expertise in building modern web applications and intelligent systems. My technical skills span from front-end development with React to back-end with Django, Laravel, and Node.js, combined with advanced knowledge in Computer Vision, Deep Learning, and IoT solutions.",
+        description2:
+          "Currently based in Agadir, Morocco, I'm passionate about fintech and innovative digital solutions. I focus on creating scalable web applications that integrate AI technologies to solve real-world problems and deliver impactful user experiences.",
+        educationTitle: "Education",
+        experienceTitle: "Experience",
+        master: "Master's Degree",
+        masterField: "Embedded Systems & Digital Services",
+        masterSchool: "Faculty of Applied Sciences Ait Melloul",
+        bachelor: "Bachelor's Degree",
+        bachelorField: "Mathematical & Computer Sciences",
+        bachelorSchool: "Faculty of Sciences Agadir",
+        internship: "End of Studies Internship",
+        internshipTitle: "HR Application Developer",
+        internshipProject:
+          "Design and development of a web application for human resources management",
+        internshipCompany: "ENA-Agadir",
+        internshipPeriod: "2022",
+      },
+      skills: {
+        label: "My Skills",
+        title: "What I Do",
+      },
+      projects: {
+        label: "Portfolio",
+        title: "Featured Projects",
+        viewDetails: "View Details",
+      },
+      contact: {
+        label: "Contact",
+        title: "Get In Touch",
+        subtitle:
+          "I'm always open to new opportunities and interesting projects. Let's work together!",
+        email: "Email Me",
+        linkden: "Linkden",
+      },
+      footer: {
+        rights: "All rights reserved.",
+      },
+      modal: {
+        techUsed: "Technologies Used",
+        gallery: "Gallery",
+      },
+    },
+    fr: {
+      nav: {
+        home: "Accueil",
+        about: "À Propos",
+        projects: "Projets",
+        contact: "Contact",
+      },
+      hero: {
+        greeting: "BONJOUR!",
+        title1: "Je suis",
+        title2: "Khadija",
+        title3: "Hantati",
+        profession: "Développeuse Full Stack",
+        subtitle:
+          "Développeuse Web Full Stack & Ingénieure IA. Experte en développement d'applications web modernes avec React, Django et Laravel, tout en intégrant des solutions IA incluant Vision par Ordinateur, Deep Learning et systèmes IoT.",
+        btnWork: "Voir Mon Travail",
+        btnCV: "Télécharger CV",
+      },
+      about: {
+        label: "À Propos",
+        title: "En Savoir Plus",
+        subtitle: "Bonjour, je suis",
+        description1:
+          "Je suis Développeuse Web Full Stack et Ingénieure IA avec une solide expertise dans la création d'applications web modernes et de systèmes intelligents. Mes compétences techniques vont du développement front-end avec React au back-end avec Django, Laravel et Node.js, combinées à des connaissances avancées en Vision par Ordinateur, Deep Learning et solutions IoT.",
+        description2:
+          "Actuellement basée à Agadir, au Maroc, je suis passionnée par les fintech et les solutions digitales innovantes. Je me concentre sur la création d'applications web évolutives qui intègrent les technologies IA pour résoudre des problèmes réels et offrir des expériences utilisateur impactantes.",
+        educationTitle: "Formation",
+        experienceTitle: "Expérience",
+        master: "Master",
+        masterField: "Systèmes Embarqués & Services Numériques",
+        masterSchool: "Faculté des Sciences Appliquées Ait Melloul",
+        bachelor: "Licence",
+        bachelorField: "Sciences Mathématiques & Informatiques",
+        bachelorSchool: "Faculté des Sciences Agadir",
+        internship: "Stage de Fin d'Études",
+        internshipTitle: "Développeur Application RH",
+        internshipProject:
+          "Conception et développement d'une application web de gestion des ressources humaines",
+        internshipCompany: "ENA-Agadir",
+        internshipPeriod: "2022",
+      },
+      skills: {
+        label: "Mes Compétences",
+        title: "Ce Que Je Fais",
+      },
+      projects: {
+        label: "Portfolio",
+        title: "Projets Principaux",
+        viewDetails: "Voir Détails",
+      },
+      contact: {
+        label: "Contact",
+        title: "Contactez-Moi",
+        subtitle:
+          "Je suis toujours ouverte à de nouvelles opportunités et projets intéressants. Travaillons ensemble!",
+        email: "M'envoyer un Email",
+        github: "GitHub",
+      },
+      footer: {
+        rights: "Tous droits réservés.",
+      },
+      modal: {
+        techUsed: "Technologies Utilisées",
+        gallery: "Galerie",
+      },
+    },
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const t = translations[language];
+
+  const projectsData = {
+    en: [
+      {
+        id: 1,
+        title: "HR Management Web Application",
+        category: "Web Development",
+        description:
+          "Complete web application for human resources management developed during my end-of-studies internship at ENA-Agadir. Features include employee management, leave tracking, and administrative workflows.",
+        tech: ["PHP", "Laravel", "MySQL", "HTML/CSS", "JavaScript"],
+        image: "👥",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/Ena/ena3.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena4.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena5.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena6.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena7.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena14.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena15.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena16.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena8.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena9.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena10.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena11.png",
+          },
+        ],
+      },
+      {
+        id: 2,
+        title: "Road Incident Detection from Video Streams",
+        category: "AI/Computer Vision",
+        description:
+          "Real-time traffic incident detection using YOLOv8 Nano and DeepSORT trajectory analysis",
+        tech: ["YOLOv8", "DeepSORT", "Django", "Python"],
+        image: "🚗",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/dashboard.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/uploadVideo.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/mapLiveVideo.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/subscribe.png",
+          },
+        ],
+      },
+      {
+        id: 3,
+        title: "Intestinal Metaplasia Detection",
+        category: "Medical AI",
+        description:
+          "Deep learning model for automatic detection of intestinal metaplasia in gastric biopsies",
+        tech: ["Deep Learning", "Medical Imaging", "Python", "TensorFlow"],
+        image: "🔬",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/mi1.jpeg",
+          },
+          {
+            type: "image",
+            src: "./public/images/mi2.jpeg",
+          },
+          {
+            type: "image",
+            src: "./public/images/mi3.jpeg",
+          },
+        ],
+      },
+      {
+        id: 4,
+        title: "Smart Agriculture IoT System",
+        category: "IoT/AI",
+        description:
+          "Automated crop monitoring system with ESP32 sensors and predictive algorithms",
+        tech: ["ESP32", "IoT", "Django", "MongoDB", "Predictive Analytics"],
+        image: "🌾",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart1.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart2.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart3.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart4.png",
+          },
+        ],
+      },
+
+      {
+        id: 5,
+        title: "Advanced Image Classification with DCGAN",
+        category: "Deep Learning",
+        description:
+          "Classification system combining DCGAN for synthetic data generation and MobileNet transfer learning",
+        tech: ["DCGAN", "MobileNet", "Transfer Learning", "PyTorch"],
+        image: "🖼️",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/projects/hr1.png",
+          },
+          {
+            type: "video",
+            src: "./public/videos/projects/hr-demo.mp4",
+            thumbnail: "./public/images/projects/hr-video-thumb.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/projects/hr2.png",
+          },
+        ],
+      },
+      {
+        id: 6,
+        title: "DevQuiz - Programming Quiz Mobile App",
+        category: "Mobile Development",
+        description:
+          "Native Android mobile application for programming skills assessment. Features interactive quizzes on 6 programming languages/technologies (C++, Java, PHP, Python, CSS, HTML) with a modern and intuitive user interface. SQLite database integration for score management and user progress tracking with immediate feedback.",
+        tech: ["Android Studio", "Java", "SQLite", "XML", "Mobile Development"],
+        image: "📱",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/androidApp6.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp2.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp3.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp5.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp4.jpg",
+          },
+        ],
+      },
+      {
+        id: 7,
+        title: "Image Filtering & Edge Detection Application",
+        category: "Computer Vision",
+        description:
+          "Complete image processing application using Python and Tkinter implementing various filtering and edge detection techniques. Includes spatial filtering (mean, median) and frequency filtering (ideal, Gaussian, Butterworth), plus edge detection methods (Roberts, Sobel, Prewitt, Canny) with real-time transformations and comparative visualization.",
+        tech: ["Python", "OpenCV", "Tkinter", "PIL", "NumPy", "Matplotlib"],
+        image: "🖼️",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering2.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering1.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering3.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering4.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering5.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering6.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering7.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering8.jpg",
+          },
+        ],
+      },
+      {
+        id: 8,
+        title: "Robotic Painting Simulation with RoboDK",
+        category: "Robotics/Industry 4.0",
+        description:
+          "Complete robotic simulation system for industrial painting operations using RoboDK software and Han's Robot E03 collaborative robot. Features complex trajectory design, offline robot programming, automated production environment simulation with conveyors and vision systems, demonstrating Industry 4.0 and collaborative robotics applications.",
+        tech: ["RoboDK", "Python", "Robotics", "Simulation", "Industry 4.0"],
+        image: "🤖",
+        screenshots: [
+          {
+            type: "video",
+            src: "./public/videos/robodkvid2.mp4",
+            thumbnail: "./public/images/robodk/hans_bot.png",
+          },
+          {
+            type: "video",
+            src: "./public/videos/robodkvid1.mp4",
+            thumbnail: "./public/images/robodk/hans_bot.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG6.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG5.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG7.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG11.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG12.jpg",
+          },
+        ],
+      },
+    ],
+    fr: [
+      {
+        id: 1,
+        title: "Application Web de Gestion des Ressources Humaines",
+        category: "Développement Web",
+        description:
+          "Application web complète de gestion des ressources humaines développée lors de mon stage de fin d'études chez ENA-Agadir. Fonctionnalités incluant la gestion des employés, suivi des congés et flux administratifs.",
+        tech: ["PHP", "Laravel", "MySQL", "HTML/CSS", "JavaScript"],
+        image: "👥",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/Ena/ena3.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena4.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena5.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena6.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena7.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena14.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena15.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena16.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena8.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena9.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena10.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/Ena/ena11.png",
+          },
+        ],
+      },
+      {
+        id: 2,
+        title: "Détection d'Incidents Routiers à partir de Flux Vidéo",
+        category: "IA/Vision par Ordinateur",
+        description:
+          "Détection d'incidents de trafic en temps réel utilisant YOLOv8 Nano et l'analyse de trajectoire DeepSORT",
+        tech: ["YOLOv8", "DeepSORT", "Django", "Python"],
+        image: "🚗",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/dashboard.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/uploadVideo.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/mapLiveVideo.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/subscribe.png",
+          },
+        ],
+      },
+      {
+        id: 3,
+        title: "Détection de Métaplasie Intestinale",
+        category: "IA Médicale",
+        description:
+          "Modèle d'apprentissage profond pour la détection automatique de la métaplasie intestinale dans les biopsies gastriques",
+        tech: ["Deep Learning", "Imagerie Médicale", "Python", "TensorFlow"],
+        image: "🔬",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/mi1.jpeg",
+          },
+          {
+            type: "image",
+            src: "./public/images/mi2.jpeg",
+          },
+          {
+            type: "image",
+            src: "./public/images/mi3.jpeg",
+          },
+        ],
+      },
+
+      {
+        id: 4,
+        title: "Système IoT d'Agriculture Intelligente",
+        category: "IoT/IA",
+        description:
+          "Système automatisé de surveillance des cultures avec capteurs ESP32 et algorithmes prédictifs",
+        tech: ["ESP32", "IoT", "Django", "MongoDB", "Analyse Prédictive"],
+        image: "🌾",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart1.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart2.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart3.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/smartIOT/smart4.png",
+          },
+        ],
+      },
+      {
+        id: 5,
+        title: "Classification d'Images Avancée avec DCGAN",
+        category: "Deep Learning",
+        description:
+          "Système de classification combinant DCGAN pour la génération de données synthétiques et le transfert d'apprentissage MobileNet",
+        tech: ["DCGAN", "MobileNet", "Transfer Learning", "PyTorch"],
+        image: "🖼️",
+        screenshots: [],
+      },
+      {
+        id: 6,
+        title: "DevQuiz - Application Mobile de Quiz de Programmation",
+        category: "Développement Mobile",
+        description:
+          "Application mobile Android native pour l'évaluation des compétences en programmation. Propose des quiz interactifs sur 6 langages/technologies (C++, Java, PHP, Python, CSS, HTML) avec interface utilisateur moderne et intuitive. Intégration SQLite pour la gestion des scores et suivi des progrès avec feedback immédiat.",
+        tech: ["Android Studio", "Java", "SQLite", "XML", "Mobile Development"],
+        image: "📱",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/androidApp6.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp2.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp3.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp5.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/androidApp4.jpg",
+          },
+        ],
+      },
+      {
+        id: 7,
+        title: "Application de Filtrage d'Images et Détection des Contours",
+        category: "Vision par Ordinateur",
+        description:
+          "Application complète de traitement d'image utilisant Python et Tkinter implémentant diverses techniques de filtrage et détection des contours. Inclut filtrage spatial (moyenneur, médian) et fréquentiel (idéal, gaussien, Butterworth), plus méthodes de détection (Roberts, Sobel, Prewitt, Canny) avec transformations en temps réel et visualisation comparative.",
+        tech: ["Python", "OpenCV", "Tkinter", "PIL", "NumPy", "Matplotlib"],
+        image: "🖼️",
+        screenshots: [
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering2.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering1.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering3.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering4.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering5.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering6.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering7.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/image_filtering/imgFiltering8.jpg",
+          },
+        ],
+      },
+      {
+        id: 8,
+        title: "Simulation de Peinture Robotisée avec RoboDK",
+        category: "Robotique/Industrie 4.0",
+        description:
+          "Système complet de simulation robotique pour opérations de peinture industrielle utilisant RoboDK et robot collaboratif Han's Robot E03. Comprend conception de trajectoires complexes, programmation hors ligne, simulation d'environnements automatisés avec convoyeurs et vision, démontrant les applications de l'Industrie 4.0 et robotique collaborative.",
+        tech: ["RoboDK", "Python", "Robotique", "Simulation", "Industrie 4.0"],
+        image: "🤖",
+        screenshots: [
+          {
+            type: "video",
+            src: "./public/videos/robodkvid2.mp4",
+            thumbnail: "./public/images/robodk/hans_bot.png",
+          },
+          {
+            type: "video",
+            src: "./public/videos/robodkvid1.mp4",
+            thumbnail: "./public/images/robodk/hans_bot.png",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG6.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG5.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG7.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG11.jpg",
+          },
+          {
+            type: "image",
+            src: "./public/images/robodk/IMG12.jpg",
+          },
+        ],
+      },
+    ],
   };
 
-  const navigation = [
-    { id: "home", label: "Accueil" },
-    { id: "about", label: "À Propos" },
-    { id: "resume", label: "CV" },
-    { id: "projects", label: "Projets" },
-    { id: "contact", label: "Contact" },
-  ];
+  const projects = projectsData[language];
 
   const skills = {
-    "Intelligence Artificielle & Data Science": [
-      "Machine Learning (Classification, Régression, Modèles prédictifs)",
-      "Deep Learning (CNN, RNN, YOLO, GAN)",
-      "Computer Vision (OpenCV, détection d'objets, traitement d'images)",
-      "Algorithmes (DeepSORT, ByteTrack, détection intelligente)",
+    "AI & Data Science": [
+      "Machine Learning",
+      "Deep Learning",
+      "CNN/RNN",
+      "YOLO",
+      "GAN",
+      "Computer Vision",
     ],
-    "Développement & Programmation": [
-      "Python, C/C++, Java, PHP",
-      "TensorFlow, PyTorch, Scikit-learn",
-      "Django, Flask, React.js, Laravel",
-      "HTML/CSS/JavaScript",
-      "Android Studio",
-      "MySQL, MongoDB, Cassandra",
+    Development: [
+      "Python",
+      "C/C++",
+      "Java",
+      "JavaScript",
+      "React",
+      "Django",
+      "Flask",
     ],
-    "Systèmes & IoT": [
-      "ESP32, ESP8266, Arduino",
-      "Google Colab, MongoDB Atlas",
-      "MATLAB, Git, Jupyter Notebook",
-    ],
+    Databases: ["MySQL", "MongoDB", "Cassandra"],
+    "IoT & Embedded": ["ESP32", "ESP8266", "Arduino", "Google Colab"],
+    Tools: ["TensorFlow", "PyTorch", "OpenCV", "Git", "Jupyter"],
   };
 
-  const education = [
-    {
-      year: "2023-2025",
-      degree: "Master Systèmes Embarqués et Services Numériques",
-      institution: "Faculté des Sciences Appliquées Ait Melloul",
-    },
-    {
-      year: "2021-2022",
-      degree: "Licence Sciences Mathématiques et Informatique - Génie Logiciel",
-      institution: "Faculté des Sciences - Agadir",
-    },
-    {
-      year: "2019-2021",
-      degree: "DEUG Sciences Mathématiques et Informatique",
-      institution: "Faculté des Sciences - Agadir",
-    },
-    {
-      year: "2019",
-      degree: "Baccalauréat Sciences Mathématiques",
-      institution: "Lycée Badr Agadir",
-    },
-  ];
-
-  const projects = [
-    {
-      title: "Détection et Reconnaissance Automatique des Incidents Routiers",
-      category: "IA & Computer Vision",
-      description:
-        "Application IA d'analyse automatique de vidéos de circulation pour détecter les incidents en temps réel. Utilisation de YOLOv8 Nano et DeepSORT pour l'extraction de coordonnées véhicules et classification basée sur l'analyse des positions/vitesses. Interface Django avec alertes automatiques.",
-      tags: ["YOLOv8", "DeepSORT", "Django", "Computer Vision"],
-      image:
-        "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop",
-      screenshots: [
-        "./images/projects/mapLiveVideo.png",
-        "./images/projects/incidents-routiers/screenshot1.png",
-        "./images/projects/incidents-routiers/screenshot1.png",
-      ],
-      features: [
-        "Détection temps réel",
-        "Analyse de trajectoires",
-        "Alertes automatiques",
-        "Interface Django",
-      ],
-    },
-    {
-      title: "Détection de Métaplasie Intestinale par IA",
-      category: "IA Médicale",
-      description:
-        "Modèle de deep learning pour la détection automatique de métaplasie intestinale dans des biopsies gastriques virtuelles. Algorithmes de classification pour assistance au diagnostic médical.",
-      tags: ["Deep Learning", "Healthcare AI", "Classification"],
-      image:
-        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop",
-      screenshots: [
-        "./images/projects/mi1.jpeg",
-        "./images/projects/mi2.jpeg",
-        "./images/projects/mi3.jpeg",
-      ],
-      features: [
-        "Assistance diagnostic",
-        "Lames virtuelles",
-        "Classification avancée",
-        "Précision élevée",
-      ],
-    },
-    {
-      title: "Classification d'images avec DCGAN",
-      category: "Deep Learning",
-      description:
-        "Système de classification combinant DCGAN pour génération de données synthétiques et MobileNet avec transfer learning. Implémentation complète avec évaluation des performances.",
-      tags: ["GAN", "MobileNet", "Transfer Learning"],
-      image:
-        "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
-      features: [
-        "Augmentation de données",
-        "Transfer learning",
-        "Données synthétiques",
-        "Optimisation",
-      ],
-    },
-    {
-      title: "Système de Surveillance Intelligente des Plantes IoT",
-      category: "IoT & IA",
-      description:
-        "Système IoT complet pour le monitoring automatisé de l'humidité du sol avec capteurs capacitifs et ESP32. Collecte de données en temps réel via WSN, stockage MongoDB Atlas, interface Django avec graphiques analytiques (Matplotlib, Pandas).",
-      tags: ["IoT", "ESP32", "MongoDB", "Django", "WSN"],
-      image:
-        "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=600&h=400&fit=crop",
-      features: [
-        "Capteurs capacitifs d'humidité",
-        "Réseau de capteurs sans fil",
-        "Base de données NoSQL",
-        "Visualisation analytique",
-      ],
-    },
-    {
-      title: "Distributeur Intelligent de Nourriture pour Animaux IoT",
-      category: "IoT & Automatisation",
-      description:
-        "Système automatisé de distribution contrôlé par commandes vocales via Google Assistant. NodeMCU ESP32 avec Wi-Fi, protocole MQTT, intégration Adafruit IO et IFTTT pour programmation d'horaires et contrôle à distance.",
-      tags: ["IoT", "ESP32", "MQTT", "Google Assistant", "IFTTT"],
-      image:
-        "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&h=400&fit=crop",
-      features: [
-        "Commandes vocales Google",
-        "Programmation d'horaires",
-        "Contrôle à distance",
-        "Protocole MQTT",
-      ],
-    },
-    {
-      title: "DevQuiz - Application Mobile de Quiz de Programmation",
-      category: "Développement Mobile",
-      description:
-        "Application Android native pour l'évaluation des compétences en programmation. Quiz interactifs sur 6 langages (C++, Java, PHP, Python, CSS, HTML) avec interface moderne, base SQLite pour scores et suivi des progrès.",
-      tags: ["Android", "Java", "SQLite", "Mobile Development"],
-      image:
-        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop",
-      features: [
-        "6 langages de programmation",
-        "Interface utilisateur moderne",
-        "Gestion des scores SQLite",
-        "Feedback immédiat",
-      ],
-    },
-    {
-      title: "Application de Filtrage d'Images et Détection des Contours",
-      category: "Computer Vision",
-      description:
-        "Application complète de traitement d'image avec Python et Tkinter. Implémentation d'algorithmes de filtrage spatial (moyenneur, médian) et fréquentiel (idéal, gaussien, Butterworth), détection des contours (Roberts, Sobel, Prewitt, Canny).",
-      tags: ["Python", "OpenCV", "Tkinter", "Image Processing"],
-      image:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      features: [
-        "Filtrage spatial et fréquentiel",
-        "Opérateurs de contours multiples",
-        "Interface Tkinter intuitive",
-        "Analyse quantitative des performances",
-      ],
-    },
-    {
-      title: "Simulation d'Opération de Détection et Peinture Robotisée",
-      category: "Robotique & Industrie 4.0",
-      description:
-        "Système de simulation robotique pour peinture industrielle avec RoboDK et robot Han's E03. Programmation hors ligne, optimisation de trajectoires, génération de code Python via API, intégration de systèmes de vision et convoyeurs.",
-      tags: ["RoboDK", "Python", "Robotique", "Industrie 4.0"],
-      image: "https://www.robotics247.com/images/article/Hans_Robot.png",
-      features: [
-        "Programmation hors ligne",
-        "Optimisation de trajectoires",
-        "Détection d'objets intelligente",
-        "Réduction des temps d'arrêt",
-      ],
-    },
-  ];
-
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Header */}
-      <header className="fixed top-0 w-full bg-white shadow-md z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <h1 className="text-2xl font-bold text-gray-800">
-              Khadija Hantati
-            </h1>
+    <div className="w-screen h-screen overflow-x-hidden">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
-              {navigation.map((item) => (
+        * {
+          // font-family: 'Poppins', sans-serif;
+          font-family: 'Playfair Display', serif;   
+
+        }
+        
+        .gradient-text {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        
+        .btn-primary {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-outline {
+          border: 2px solid #667eea;
+          color: #667eea;
+          transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          transform: translateY(-2px);
+        }
+        
+        .card-hover {
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .card-hover:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .skill-badge {
+          transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          transform: scale(1.05);
+        }
+        
+        .social-icon {
+          transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-color: transparent;
+          color: white;
+          transform: translateY(-3px);
+        }
+      `}</style>
+
+      <div className="bg-white text-gray-800 min-h-screen">
+        {/* Navigation */}
+        <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
+          <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+            <div className="text-3xl font-bold gradient-text">K.H</div>
+            <ul className="flex gap-10 items-center">
+              <li>
+                <a
+                  href="#home"
+                  className="text-gray-700 hover:text-purple-600 transition font-medium text-base"
+                >
+                  {t.nav.home}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#about"
+                  className="text-gray-700 hover:text-purple-600 transition font-medium text-base"
+                >
+                  {t.nav.about}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#projects"
+                  className="text-gray-700 hover:text-purple-600 transition font-medium text-base"
+                >
+                  {t.nav.projects}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  className="text-gray-700 hover:text-purple-600 transition font-medium text-base"
+                >
+                  {t.nav.contact}
+                </a>
+              </li>
+              <li>
                 <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`text-sm font-medium transition-colors ${
-                    activeSection === item.id
-                      ? "text-blue-600"
-                      : "text-gray-600 hover:text-blue-600"
-                  }`}
+                  onClick={() => setLanguage(language === "en" ? "fr" : "en")}
+                  className="px-4 py-2 border-2 border-purple-400 text-purple-600 rounded-full font-semibold hover:bg-purple-600 hover:text-white transition"
                 >
-                  {item.label}
+                  {language === "en" ? "FR" : "EN"}
                 </button>
-              ))}
-            </nav>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2"
-            >
-              {isMenuOpen ? <X /> : <Menu />}
-            </button>
+              </li>
+            </ul>
           </div>
+        </nav>
 
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <nav className="md:hidden pb-4">
-              {navigation.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`block w-full text-left py-2 px-4 ${
-                    activeSection === item.id
-                      ? "text-blue-600 bg-blue-50"
-                      : "text-gray-600"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-          )}
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section
-        id="home"
-        className="pt-20 min-h-screen flex items-center bg-gradient-to-br from-blue-50 to-indigo-100"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-              Khadija Hantati
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-700 mb-8">
-              Spécialisée en Intelligence Artificielle et Innovation
-              Technologique
-            </p>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-              Master Systèmes Embarqués et Services Numériques | Expert en
-              Machine Learning, Deep Learning & Computer Vision
-            </p>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium"
-            >
-              Me Contacter
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-            À Propos
-          </h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Ingénieure en Intelligence Artificielle
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Diplômée d'un Master Systèmes Embarqués et Services Numériques
-                avec des compétences solides en Machine Learning, Deep Learning
-                et Développement informatique.
+        {/* Hero Section */}
+        <section
+          id="home"
+          className="pt-40 pb-32 px-8 bg-gradient-to-br from-purple-50 to-blue-50"
+        >
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-3xl">
+              <p className="text-purple-600 font-semibold text-sm mb-3 tracking-wide">
+                {t.hero.greeting}
               </p>
-              <p className="text-gray-600 mb-6">
-                Passionnée par la recherche en IA et forte d'une expérience
-                pratique en développement de modèles de prévision, systèmes
-                intelligents et algorithmes de détection avec un fort intérêt
-                pour l'innovation technologique et les solutions IA pour les
-                villes intelligentes.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Localisation</p>
-                  <p className="font-medium text-gray-900">Agadir, Maroc</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Langues</p>
-                  <p className="font-medium text-gray-900">
-                    Arabe, Français, Anglais, Tamazight
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg p-8 text-white">
-              <h4 className="text-2xl font-bold mb-6">Domaines d'Expertise</h4>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Intelligence Artificielle & Machine Learning</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Computer Vision & Traitement d'Images</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Deep Learning & Réseaux de Neurones</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Systèmes Embarqués & IoT</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Développement Web & Mobile</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Resume Section */}
-      <section id="resume" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-            CV
-          </h2>
-
-          {/* Education */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Formation</h3>
-            <div className="space-y-8">
-              {education.map((edu, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-600"
-                >
-                  <div className="flex flex-wrap justify-between items-start mb-2">
-                    <h4 className="text-xl font-bold text-gray-900">
-                      {edu.degree}
-                    </h4>
-                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {edu.year}
-                    </span>
-                  </div>
-                  <p className="text-gray-600">{edu.institution}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Skills */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">
-              Compétences Techniques
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              {Object.entries(skills).map(([category, items]) => (
-                <div
-                  key={category}
-                  className="bg-white p-6 rounded-lg shadow-sm"
-                >
-                  <h4 className="text-lg font-bold text-gray-900 mb-4">
-                    {category}
-                  </h4>
-                  <ul className="space-y-2">
-                    {items.map((skill, index) => (
-                      <li
-                        key={index}
-                        className="text-gray-600 text-sm flex items-start"
-                      >
-                        <span className="text-blue-600 mr-2">▹</span>
-                        <span>{skill}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Experience */}
-          <div className="mt-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">
-              Expérience
-            </h3>
-            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-600">
-              <div className="flex flex-wrap justify-between items-start mb-2">
-                <h4 className="text-xl font-bold text-gray-900">
-                  Stage Développeur Application RH
-                </h4>
-                <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                  2022
+              <h1 className="text-5xl font-bold mb-3 text-gray-900 leading-tight">
+                {t.hero.title1}{" "}
+                <span className="gradient-text">
+                  {t.hero.title2} {t.hero.title3}
                 </span>
-              </div>
-              <p className="text-gray-700 font-medium mb-2">ENA - Agadir</p>
-              <p className="text-gray-600">
-                Conception et développement d'une application web de gestion des
-                ressources humaines
+              </h1>
+              <p className="text-2xl font-bold text-gray-700 mb-6">
+                {t.hero.profession}{" "}
               </p>
+              <p className="text-xl text-gray-600 mb-10 leading-relaxed font-light">
+                {t.hero.subtitle}
+              </p>
+
+              {/* Social Icons */}
+              <div className="flex gap-4 mb-10">
+                <a
+                  href="https://github.com/KhadijaHantati"
+                  target="_blank"
+                  className="social-icon w-14 h-14 rounded-full border-2 border-purple-400 flex items-center justify-center text-purple-600"
+                >
+                  <Github size={24} />
+                </a>
+                <a
+                  href="https://x.com/KhadijaHantati"
+                  target="_blank"
+                  className="social-icon w-14 h-14 rounded-full border-2 border-purple-400 flex items-center justify-center text-purple-600"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+                <a
+                  href="mailto:khadijahantati90@gmail.com"
+                  target="_blank"
+                  className="social-icon w-14 h-14 rounded-full border-2 border-purple-400 flex items-center justify-center text-purple-600"
+                >
+                  <Mail size={24} />
+                </a>
+                <a
+                  href="https://linkedin.com/in/khadija-hantati-51579a227"
+                  target="_blank"
+                  className="social-icon w-14 h-14 rounded-full border-2 border-purple-400 flex items-center justify-center text-purple-600"
+                >
+                  <Linkedin size={24} />
+                </a>
+              </div>
+
+              <div className="flex gap-5">
+                <a href="#projects">
+                  <button className="px-8 py-4 btn-primary text-white rounded-full font-semibold text-base">
+                    {t.hero.btnWork}
+                  </button>
+                </a>
+                <a href="./public/devWeb.pdf" target="_blank">
+                  <button className="px-8 py-4 btn-outline rounded-full font-semibold text-base">
+                    {t.hero.btnCV}
+                  </button>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-            Projets IA & Recherche
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-                onClick={() => setSelectedProject(project)}
-              >
-                <div className="relative group">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-white text-lg font-semibold">
-                      Voir les détails
+        {/* About Section */}
+        <section id="about" className="py-28 px-8 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-20">
+              <p className="text-purple-600 font-semibold text-sm mb-3 tracking-widest uppercase">
+                {t.about.label}
+              </p>
+              <h2 className="text-5xl font-bold text-gray-900">
+                {t.about.title}
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-16">
+              <div>
+                <h3 className="text-3xl font-bold mb-6 text-gray-900">
+                  {t.about.subtitle}{" "}
+                  <span className="gradient-text">Khadija Hantati</span>
+                </h3>
+                <p className="text-gray-600 leading-relaxed mb-6 text-lg font-light">
+                  {t.about.description1}
+                </p>
+                <p className="text-gray-600 leading-relaxed mb-8 text-lg font-light">
+                  {t.about.description2}
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4 text-gray-700">
+                    <MapPin className="text-purple-600" size={22} />
+                    <span className="text-base">Agadir, Morocco</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-gray-700">
+                    <Mail className="text-purple-600" size={22} />
+                    <span className="text-base">
+                      khadijahantati90@gmail.com
                     </span>
                   </div>
+                  <div className="flex items-center gap-4 text-gray-700">
+                    <Phone className="text-purple-600" size={22} />
+                    <span className="text-base">+212 636041755</span>
+                  </div>
                 </div>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold mb-8 gradient-text">
+                  {t.about.educationTitle}
+                </h3>
+                <div className="space-y-8">
+                  <div className="relative pl-8 border-l-2 border-purple-200">
+                    <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-gradient-to-br from-purple-500 to-purple-700"></div>
+                    <h4 className="font-bold text-xl text-gray-900 mb-2">
+                      {t.about.master}
+                    </h4>
+                    <p className="text-purple-600 font-semibold mb-2">
+                      {t.about.masterField}
+                    </p>
+                    <p className="text-gray-600 font-light">
+                      {t.about.masterSchool}
+                    </p>
+                    <p className="text-gray-500 text-sm mt-1">2023 - 2025</p>
+                  </div>
+                  <div className="relative pl-8 border-l-2 border-purple-200">
+                    <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-gradient-to-br from-purple-500 to-purple-700"></div>
+                    <h4 className="font-bold text-xl text-gray-900 mb-2">
+                      {t.about.bachelor}
+                    </h4>
+                    <p className="text-purple-600 font-semibold mb-2">
+                      {t.about.bachelorField}
+                    </p>
+                    <p className="text-gray-600 font-light">
+                      {t.about.bachelorSchool}
+                    </p>
+                    <p className="text-gray-500 text-sm mt-1">2021 - 2022</p>
+                  </div>
+                  <div className="relative pl-8 border-l-2 border-purple-200">
+                    <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-gradient-to-br from-purple-500 to-purple-700"></div>
+                    <h4 className="font-bold text-xl text-gray-900 mb-2">
+                      {t.about.internship}
+                    </h4>
+                    <p className="text-purple-600 font-semibold mb-2">
+                      {t.about.internshipTitle}
+                    </p>
+                    <p className="text-gray-600 font-light">
+                      {t.about.internshipCompany}
+                    </p>
+                    <p className="text-gray-500 text-sm mt-1">
+                      {t.about.internshipPeriod}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                <div className="p-6">
-                  <span className="text-sm text-blue-600 font-medium">
-                    {project.category}
-                  </span>
-                  <h3 className="text-xl font-bold text-gray-900 mt-2 mb-3">
-                    {project.title}
+        {/* Skills Section */}
+        <section className="py-28 px-8 bg-gradient-to-br from-purple-50 to-blue-50">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-20">
+              <p className="text-purple-600 font-semibold text-sm mb-3 tracking-widest uppercase">
+                {t.skills.label}
+              </p>
+              <h2 className="text-5xl font-bold text-gray-900">
+                {t.skills.title}
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Object.entries(skills).map((category, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all card-hover"
+                >
+                  <h3 className="text-xl font-bold gradient-text mb-6">
+                    {category[0]}
                   </h3>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, tagIndex) => (
+                  <div className="flex flex-wrap gap-3">
+                    {category[1].map((skill, i) => (
                       <span
-                        key={tagIndex}
-                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium"
+                        key={i}
+                        className="skill-badge bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-default"
                       >
-                        {tag}
+                        {skill}
                       </span>
                     ))}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* Project Modal */}
-      {selectedProject && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
-          onClick={() => {
-            setSelectedProject(null);
-            setCurrentImageIndex(0); // Reset l'index
-          }}
-        >
-          <div
-            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setSelectedProject(null);
-                  setCurrentImageIndex(0);
-                }}
-                className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 z-10"
-              >
-                <X size={24} />
-              </button>
-
-              {/* Carousel d'images */}
-              {selectedProject.screenshots &&
-              selectedProject.screenshots.length > 0 ? (
-                <div className="relative">
-                  <img
-                    src={selectedProject.screenshots[currentImageIndex]}
-                    alt={`${selectedProject.title} - Screenshot ${
-                      currentImageIndex + 1
-                    }`}
-                    className="w-full h-96 object-contain bg-gray-100"
-                  />
-
-                  {/* Boutons de navigation */}
-                  {selectedProject.screenshots.length > 1 && (
-                    <>
-                      <button
-                        onClick={() =>
-                          setCurrentImageIndex(
-                            currentImageIndex === 0
-                              ? selectedProject.screenshots.length - 1
-                              : currentImageIndex - 1
-                          )
-                        }
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white bg-opacity-90 rounded-full flex items-center justify-center shadow-lg hover:bg-opacity-100"
-                      >
-                        <ChevronRight
-                          size={24}
-                          className="transform rotate-180 text-blue-800"
-                        />
-                      </button>
-                      <button
-                        onClick={() =>
-                          setCurrentImageIndex(
-                            currentImageIndex ===
-                              selectedProject.screenshots.length - 1
-                              ? 0
-                              : currentImageIndex + 1
-                          )
-                        }
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white bg-opacity-90 rounded-full flex items-center justify-center shadow-lg hover:bg-opacity-100"
-                      >
-                        <ChevronRight size={24} />
-                      </button>
-
-                      {/* Indicateurs de pagination */}
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                        {selectedProject.screenshots.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentImageIndex(index)}
-                            className={`w-2 h-2 rounded-full transition-all ${
-                              index === currentImageIndex
-                                ? "bg-white w-8"
-                                : "bg-white bg-opacity-50"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              ) : (
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-96 object-contain bg-gray-100"
-                />
-              )}
+              ))}
             </div>
+          </div>
+        </section>
 
-            <div className="p-8">
-              <div className="text-blue-600 text-sm font-semibold mb-2">
-                {selectedProject.category}
-              </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                {selectedProject.title}
-              </h3>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                {selectedProject.description}
+        {/* Projects Section */}
+        <section id="projects" className="py-28 px-8 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-20">
+              <p className="text-purple-600 font-semibold text-sm mb-3 tracking-widest uppercase">
+                {t.projects.label}
               </p>
-
-              <div className="mb-6">
-                <h4 className="text-xl font-bold text-gray-900 mb-3">
-                  Technologies utilisées
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.tags.map((tech) => (
-                    <span
-                      key={tech}
-                      className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-semibold"
-                    >
-                      {tech}
+              <h2 className="text-5xl font-bold text-gray-900">
+                {t.projects.title}
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-10">
+              {projects.map((project) => (
+                <div
+                  key={project.id}
+                  className="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover cursor-pointer"
+                  onClick={() => setSelectedProject(project)}
+                >
+                  <div className="h-64 bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center text-7xl">
+                    {project.image}
+                  </div>
+                  <div className="p-8">
+                    <span className="text-xs text-purple-600 font-bold uppercase tracking-wider">
+                      {project.category}
                     </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-xl font-bold text-gray-900 mb-3">
-                  Fonctionnalités clés
-                </h4>
-                <ul className="space-y-2">
-                  {selectedProject.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-2 text-gray-600"
-                    >
-                      <ChevronRight
-                        className="text-blue-600 flex-shrink-0 mt-1"
-                        size={20}
-                      />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Miniatures des screenshots */}
-              {selectedProject.screenshots &&
-                selectedProject.screenshots.length > 1 && (
-                  <div className="mt-8">
-                    <h4 className="text-xl font-bold text-gray-900 mb-3">
-                      Galerie
-                    </h4>
-                    <div className="grid grid-cols-4 gap-2">
-                      {selectedProject.screenshots.map((screenshot, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`relative overflow-hidden rounded-lg ${
-                            index === currentImageIndex
-                              ? "ring-2 ring-blue-600"
-                              : "opacity-70 hover:opacity-100"
-                          }`}
+                    <h3 className="text-2xl font-bold mt-3 mb-4 text-gray-900 group-hover:text-purple-600 transition">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-600 mb-6 leading-relaxed font-light">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {project.tech.map((t, i) => (
+                        <span
+                          key={i}
+                          className="text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full font-medium"
                         >
-                          <img
-                            src={screenshot}
-                            alt={`Thumbnail ${index + 1}`}
-                            className="w-full h-20 object-cover"
-                          />
-                        </button>
+                          {t}
+                        </span>
                       ))}
                     </div>
+                    <button className="text-purple-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+                      {t.projects.viewDetails} <ExternalLink size={18} />
+                    </button>
                   </div>
-                )}
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      )}
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-            Contact
-          </h2>
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <div className="space-y-6">
-                <div className="flex items-center">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4">
-                    <MapPin className="text-blue-600" size={24} />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Localisation</p>
-                    <p className="text-gray-900 font-medium">Agadir, Maroc</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4">
-                    <Mail className="text-blue-600" size={24} />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <a
-                      href="mailto:khadijahantati90@gmail.com"
-                      className="text-gray-900 font-medium hover:text-blue-600"
-                    >
-                      khadijahantati90@gmail.com
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4">
-                    <Phone className="text-blue-600" size={24} />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Téléphone</p>
-                    <a
-                      href="tel:0636041755"
-                      className="text-gray-900 font-medium hover:text-blue-600"
-                    >
-                      0636041755
-                    </a>
-                  </div>
-                </div>
-              </div>
+        </section>
 
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <p className="text-center text-gray-600 mb-4">
-                  N'hésitez pas à me contacter pour discuter de vos projets IA
-                </p>
-                <div className="flex justify-center space-x-4">
-                  <a
-                    href="mailto:khadijahantati90@gmail.com"
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                  >
-                    Envoyer un Email
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; 2025 Khadija Hantati. Tous droits réservés.</p>
-        </div>
-      </footer>
-
-      {/* Scroll to Top Button */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
-          aria-label="Retour en haut"
+        {/* Contact Section */}
+        <section
+          id="contact"
+          className="py-28 px-8 bg-gradient-to-br from-purple-600 to-blue-600 text-white"
         >
-          <ChevronUp size={24} />
-        </button>
-      )}
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="font-semibold text-sm mb-3 tracking-widest uppercase opacity-90">
+              {t.contact.label}
+            </p>
+            <h2 className="text-5xl font-bold mb-6">{t.contact.title}</h2>
+            <p className="text-xl mb-12 opacity-90 font-light max-w-2xl mx-auto">
+              {t.contact.subtitle}
+            </p>
+            <div className="flex justify-center gap-6">
+              <a
+                href="mailto:khadijahantati90@gmail.com"
+                className="flex items-center gap-3 px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:shadow-xl transition-all hover:-translate-y-1"
+              >
+                <Mail size={20} /> {t.contact.email}
+              </a>
+              <a
+                href="#"
+                className="flex items-center gap-3 px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-purple-600 transition-all hover:-translate-y-1"
+              >
+                <Linkedin size={20} /> {t.contact.linden}
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Project Popup Modal */}
+        {selectedProject && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-6"
+            onClick={() => {
+              setSelectedProject(null);
+              setCurrentImageIndex(0);
+            }}
+          >
+            <div
+              className="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    setSelectedProject(null);
+                    setCurrentImageIndex(0);
+                  }}
+                  className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl z-10 transition-all hover:scale-110"
+                >
+                  <X size={24} className="text-white" />
+                </button>
+
+                {/* Carousel */}
+                {selectedProject.screenshots &&
+                selectedProject.screenshots.length > 0 ? (
+                  <div className="relative">
+                    {/* Render Image or Video based on type */}
+                    {selectedProject.screenshots[currentImageIndex]?.type ===
+                    "video" ? (
+                      <video
+                        controls
+                        autoPlay
+                        loop
+                        className="w-full h-96 object-contain bg-gradient-to-br from-purple-50 to-blue-50 rounded-t-3xl"
+                      >
+                        <source
+                          src={
+                            selectedProject.screenshots[currentImageIndex]
+                              ?.src ||
+                            selectedProject.screenshots[currentImageIndex]
+                          }
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img
+                        src={
+                          selectedProject.screenshots[currentImageIndex]?.src ||
+                          selectedProject.screenshots[currentImageIndex]
+                            ?.image ||
+                          selectedProject.screenshots[currentImageIndex]
+                        }
+                        alt={`${selectedProject.title} - Screenshot ${
+                          currentImageIndex + 1
+                        }`}
+                        className="w-full h-96 object-contain bg-gradient-to-br from-purple-50 to-blue-50 rounded-t-3xl"
+                      />
+                    )}
+
+                    {/* Navigation Buttons */}
+                    {selectedProject.screenshots.length > 1 && (
+                      <>
+                        <button
+                          onClick={() =>
+                            setCurrentImageIndex(
+                              currentImageIndex === 0
+                                ? selectedProject.screenshots.length - 1
+                                : currentImageIndex - 1
+                            )
+                          }
+                          className="absolute left-6 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110"
+                        >
+                          <ChevronRight
+                            size={24}
+                            className="transform rotate-180 text-purple-600"
+                          />
+                        </button>
+                        <button
+                          onClick={() =>
+                            setCurrentImageIndex(
+                              currentImageIndex ===
+                                selectedProject.screenshots.length - 1
+                                ? 0
+                                : currentImageIndex + 1
+                            )
+                          }
+                          className="absolute right-6 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110"
+                        >
+                          <ChevronRight size={24} className="text-purple-600" />
+                        </button>
+
+                        {/* Pagination Indicators */}
+                        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                          {selectedProject.screenshots.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentImageIndex(index)}
+                              className={`h-2 rounded-full transition-all ${
+                                index === currentImageIndex
+                                  ? "bg-purple-600 w-8"
+                                  : "bg-gray-300 w-2"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="p-10">
+                <span className="text-xs text-purple-600 font-bold uppercase tracking-wider">
+                  {selectedProject.category}
+                </span>
+                <h3 className="text-4xl font-bold text-gray-900 mt-3 mb-6">
+                  {selectedProject.title}
+                </h3>
+                <p className="text-gray-600 mb-8 leading-relaxed text-lg font-light">
+                  {selectedProject.description}
+                </p>
+
+                <div className="mb-8">
+                  <h4 className="text-2xl font-bold text-gray-900 mb-4">
+                    Technologies Used
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedProject.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 px-5 py-2.5 rounded-full font-semibold border-2 border-purple-200"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Thumbnail Gallery */}
+                {selectedProject.screenshots &&
+                  selectedProject.screenshots.length > 1 && (
+                    <div className="mt-8">
+                      <h4 className="text-2xl font-bold text-gray-900 mb-4">
+                        {t.modal.gallery}
+                      </h4>
+                      <div className="grid grid-cols-4 gap-3">
+                        {selectedProject.screenshots.map(
+                          (screenshot, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentImageIndex(index)}
+                              className={`relative overflow-hidden rounded-xl border-2 transition-all ${
+                                index === currentImageIndex
+                                  ? "border-purple-600 shadow-lg scale-105"
+                                  : "border-gray-200 opacity-60 hover:opacity-100 hover:border-purple-300"
+                              }`}
+                            >
+                              {/* Show thumbnail or video preview */}
+                              <img
+                                src={
+                                  screenshot?.thumbnail ||
+                                  screenshot?.src ||
+                                  screenshot?.image ||
+                                  screenshot
+                                }
+                                alt={`Thumbnail ${index + 1}`}
+                                className="w-full h-24 object-cover"
+                              />
+                              {/* Video indicator overlay */}
+                              {screenshot?.type === "video" && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                                  <div className="w-10 h-10 rounded-full bg-white bg-opacity-90 flex items-center justify-center">
+                                    <div className="w-0 h-0 border-l-8 border-l-purple-600 border-t-6 border-t-transparent border-b-6 border-b-transparent ml-1"></div>
+                                  </div>
+                                </div>
+                              )}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Footer */}
+        <footer className="bg-gray-900 text-gray-300 py-10 px-8">
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="font-light">
+              © 2025 Khadija Hantati. All rights reserved.
+            </p>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
