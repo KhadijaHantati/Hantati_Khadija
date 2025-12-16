@@ -166,51 +166,51 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/Ena/ena3.png",
+            src: "./images/Ena/ena3.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena4.png",
+            src: "./images/Ena/ena4.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena5.png",
+            src: "./images/Ena/ena5.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena6.png",
+            src: "./images/Ena/ena6.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena7.png",
+            src: "./images/Ena/ena7.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena14.png",
+            src: "./images/Ena/ena14.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena15.png",
+            src: "./images/Ena/ena15.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena16.png",
+            src: "./images/Ena/ena16.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena8.png",
+            src: "./images/Ena/ena8.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena9.png",
+            src: "./images/Ena/ena9.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena10.png",
+            src: "./images/Ena/ena10.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena11.png",
+            src: "./images/Ena/ena11.png",
           },
         ],
       },
@@ -225,19 +225,19 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/dashboard.png",
+            src: "./images/dashboard.png",
           },
           {
             type: "image",
-            src: "/public/images/uploadVideo.png",
+            src: "./images/uploadVideo.png",
           },
           {
             type: "image",
-            src: "/public/images/mapLiveVideo.png",
+            src: "./images/mapLiveVideo.png",
           },
           {
             type: "image",
-            src: "/public/images/subscribe.png",
+            src: "./images/subscribe.png",
           },
         ],
       },
@@ -252,15 +252,15 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/mi1.jpeg",
+            src: "./images/mi1.jpeg",
           },
           {
             type: "image",
-            src: "/public/images/mi2.jpeg",
+            src: "./images/mi2.jpeg",
           },
           {
             type: "image",
-            src: "/public/images/mi3.jpeg",
+            src: "./images/mi3.jpeg",
           },
         ],
       },
@@ -275,19 +275,19 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/smartIOT/smart1.png",
+            src: "./images/smartIOT/smart1.png",
           },
           {
             type: "image",
-            src: "/public/images/smartIOT/smart2.png",
+            src: "./images/smartIOT/smart2.png",
           },
           {
             type: "image",
-            src: "/public/images/smartIOT/smart3.png",
+            src: "./images/smartIOT/smart3.png",
           },
           {
             type: "image",
-            src: "/public/images/smartIOT/smart4.png",
+            src: "./images/smartIOT/smart4.png",
           },
         ],
       },
@@ -303,16 +303,16 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/projects/hr1.png",
+            src: "./images/projects/hr1.png",
           },
           {
             type: "video",
-            src: "/public/videos/projects/hr-demo.mp4",
-            thumbnail: "/public/images/projects/hr-video-thumb.png",
+            src: "./videos/projects/hr-demo.mp4",
+            thumbnail: "./images/projects/hr-video-thumb.png",
           },
           {
             type: "image",
-            src: "/public/images/projects/hr2.png",
+            src: "./images/projects/hr2.png",
           },
         ],
       },
@@ -327,23 +327,23 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/androidApp6.jpg",
+            src: "./images/androidApp6.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp2.jpg",
+            src: "./images/androidApp2.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp3.jpg",
+            src: "./images/androidApp3.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp5.jpg",
+            src: "./images/androidApp5.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp4.jpg",
+            src: "./images/androidApp4.jpg",
           },
         ],
       },
@@ -358,35 +358,35 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering2.jpg",
+            src: "./images/image_filtering/imgFiltering2.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering1.jpg",
+            src: "./images/image_filtering/imgFiltering1.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering3.jpg",
+            src: "./images/image_filtering/imgFiltering3.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering4.jpg",
+            src: "./images/image_filtering/imgFiltering4.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering5.jpg",
+            src: "./images/image_filtering/imgFiltering5.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering6.jpg",
+            src: "./images/image_filtering/imgFiltering6.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering7.jpg",
+            src: "./images/image_filtering/imgFiltering7.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering8.jpg",
+            src: "./images/image_filtering/imgFiltering8.jpg",
           },
         ],
       },
@@ -401,33 +401,33 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "video",
-            src: "/public/videos/robodkvid2.mp4",
-            thumbnail: "/public/images/robodk/hans_bot.png",
+            src: "./videos/robodkvid2.mp4",
+            thumbnail: "./images/robodk/hans_bot.png",
           },
           {
             type: "video",
-            src: "/public/videos/robodkvid1.mp4",
-            thumbnail: "/public/images/robodk/hans_bot.png",
+            src: "./videos/robodkvid1.mp4",
+            thumbnail: "./images/robodk/hans_bot.png",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG6.jpg",
+            src: "./images/robodk/IMG6.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG5.jpg",
+            src: "./images/robodk/IMG5.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG7.jpg",
+            src: "./images/robodk/IMG7.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG11.jpg",
+            src: "./images/robodk/IMG11.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG12.jpg",
+            src: "./images/robodk/IMG12.jpg",
           },
         ],
       },
@@ -444,51 +444,51 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/Ena/ena3.png",
+            src: "./images/Ena/ena3.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena4.png",
+            src: "./images/Ena/ena4.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena5.png",
+            src: "./images/Ena/ena5.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena6.png",
+            src: "./images/Ena/ena6.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena7.png",
+            src: "./images/Ena/ena7.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena14.png",
+            src: "./images/Ena/ena14.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena15.png",
+            src: "./images/Ena/ena15.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena16.png",
+            src: "./images/Ena/ena16.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena8.png",
+            src: "./images/Ena/ena8.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena9.png",
+            src: "./images/Ena/ena9.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena10.png",
+            src: "./images/Ena/ena10.png",
           },
           {
             type: "image",
-            src: "/public/images/Ena/ena11.png",
+            src: "./images/Ena/ena11.png",
           },
         ],
       },
@@ -503,19 +503,19 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/dashboard.png",
+            src: "./images/dashboard.png",
           },
           {
             type: "image",
-            src: "/public/images/uploadVideo.png",
+            src: "./images/uploadVideo.png",
           },
           {
             type: "image",
-            src: "/public/images/mapLiveVideo.png",
+            src: "./images/mapLiveVideo.png",
           },
           {
             type: "image",
-            src: "/public/images/subscribe.png",
+            src: "./images/subscribe.png",
           },
         ],
       },
@@ -530,15 +530,15 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/mi1.jpeg",
+            src: "./images/mi1.jpeg",
           },
           {
             type: "image",
-            src: "/public/images/mi2.jpeg",
+            src: "./images/mi2.jpeg",
           },
           {
             type: "image",
-            src: "/public/images/mi3.jpeg",
+            src: "./images/mi3.jpeg",
           },
         ],
       },
@@ -554,19 +554,19 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/smartIOT/smart1.png",
+            src: "./images/smartIOT/smart1.png",
           },
           {
             type: "image",
-            src: "/public/images/smartIOT/smart2.png",
+            src: "./images/smartIOT/smart2.png",
           },
           {
             type: "image",
-            src: "/public/images/smartIOT/smart3.png",
+            src: "./images/smartIOT/smart3.png",
           },
           {
             type: "image",
-            src: "/public/images/smartIOT/smart4.png",
+            src: "./images/smartIOT/smart4.png",
           },
         ],
       },
@@ -591,23 +591,23 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/androidApp6.jpg",
+            src: "./images/androidApp6.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp2.jpg",
+            src: "./images/androidApp2.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp3.jpg",
+            src: "./images/androidApp3.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp5.jpg",
+            src: "./images/androidApp5.jpg",
           },
           {
             type: "image",
-            src: "/public/images/androidApp4.jpg",
+            src: "./images/androidApp4.jpg",
           },
         ],
       },
@@ -622,35 +622,35 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering2.jpg",
+            src: "./images/image_filtering/imgFiltering2.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering1.jpg",
+            src: "./images/image_filtering/imgFiltering1.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering3.jpg",
+            src: "./images/image_filtering/imgFiltering3.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering4.jpg",
+            src: "./images/image_filtering/imgFiltering4.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering5.jpg",
+            src: "./images/image_filtering/imgFiltering5.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering6.jpg",
+            src: "./images/image_filtering/imgFiltering6.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering7.jpg",
+            src: "./images/image_filtering/imgFiltering7.jpg",
           },
           {
             type: "image",
-            src: "/public/images/image_filtering/imgFiltering8.jpg",
+            src: "./images/image_filtering/imgFiltering8.jpg",
           },
         ],
       },
@@ -665,33 +665,33 @@ export default function Portfolio() {
         screenshots: [
           {
             type: "video",
-            src: "/public/videos/robodkvid2.mp4",
-            thumbnail: "/public/images/robodk/hans_bot.png",
+            src: "./videos/robodkvid2.mp4",
+            thumbnail: "./images/robodk/hans_bot.png",
           },
           {
             type: "video",
-            src: "/public/videos/robodkvid1.mp4",
-            thumbnail: "/public/images/robodk/hans_bot.png",
+            src: "./videos/robodkvid1.mp4",
+            thumbnail: "./images/robodk/hans_bot.png",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG6.jpg",
+            src: "./images/robodk/IMG6.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG5.jpg",
+            src: "./images/robodk/IMG5.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG7.jpg",
+            src: "./images/robodk/IMG7.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG11.jpg",
+            src: "./images/robodk/IMG11.jpg",
           },
           {
             type: "image",
-            src: "/public/images/robodk/IMG12.jpg",
+            src: "./images/robodk/IMG12.jpg",
           },
         ],
       },
@@ -913,7 +913,7 @@ export default function Portfolio() {
                     {t.hero.btnWork}
                   </button>
                 </a>
-                <a href="/public/devWeb.pdf" target="_blank">
+                <a href="./devWeb.pdf" target="_blank">
                   <button className="px-8 py-4 btn-outline rounded-full font-semibold text-base">
                     {t.hero.btnCV}
                   </button>
