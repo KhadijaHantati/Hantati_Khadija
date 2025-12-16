@@ -1123,7 +1123,7 @@ export default function Portfolio() {
                 <Mail size={20} /> {t.contact.email}
               </a>
               <a
-                href="#"
+                href="https://linkedin.com/in/khadija-hantati-51579a227"
                 className="flex items-center gap-3 px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-purple-600 transition-all hover:-translate-y-1"
               >
                 <Linkedin size={20} /> {t.contact.linden}
